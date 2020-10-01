@@ -4,15 +4,16 @@ class VegetarianRecipes::Recipes
 
     @@all = []
 
-    def initialize(name, link, category)
-        @name = name
-        @link = link
-        @category = category
+    def initialize
         @@all << self
     end
 
     def self.all
         @@all
+    end
+
+    def self.reset
+        self.all.clear
     end
 
 end
