@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require './lib/vegetarian_recipes'
+
+VegetarianRecipes::CLI.new.start
