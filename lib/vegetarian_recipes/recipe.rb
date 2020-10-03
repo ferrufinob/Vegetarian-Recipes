@@ -1,6 +1,6 @@
-class VegetarianRecipes::Recipes
+class VegetarianRecipes::Recipe
 
-    attr_accessor :name, :link, :category, :ingredients, :preparation
+    attr_accessor :name, :url, :category, :ingredients, :instructions
 
     @@all = []
 
