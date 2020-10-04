@@ -1,30 +1,38 @@
+
 class VegetarianRecipes::Scraper
     def self.scrape_courses
-        page = Nokogiri::HTML(open("https://cookieandkate.com"))
-        courses = page.css("#menu-item-17041 ul.sub-menu li")
-        courses.each do |m|
-            name = m.text
-            VegetarianRecipes::Course.new(name)
+        doc = Nokogiri::HTML(open("https://www.skinnytaste.com/recipes/"))
+        scraping_block = doc.css(".categories ul li")
+        scraping_block.each do |course|
+            name = course.text
+            ref = course.css("a").attr("href").value
+            VegetarianRecipes::Course.new(name, ref) 
         end
-
-        # binding.pry
     end
 
+        def self.scrape_recipes(course)
+           url = "#{course.ref}"
+           doc = Nokogiri::HTML(open(url))
+           recipes = doc.css(".archives .archive-post") 
+             recipes.each do |recipe|
+               name = recipe.css("a h4").text
+               url = recipe.css("a").attr("href").value
+             VegetarianRecipes::Recipe.new(name, course, url)
+           end   
+        end
 
-
-
-
-end
-
-
-
-
-#     def self.scrape_courses
-#         # dropdown that containt the courses
-#         courses = Nokogiri::HTML(open(BASE_PATH)).css("#menu-item-17041 ul.sub-menu")
+        def self.scrape_key_info(recipe)
+           url =  "https://www.skinnytaste.com/#{recipe.url}"
+           doc = Nokogiri::HTML(open(url))
+           recipe_ingredients = doc.css(".wprm-recipe-ingredients-container wprm-block-text-normal").text.strip
+           recipe_instructions = doc.css(".wprm-recipe-instructions").text.strip
+           recipe.key_info <<  recipe_ingredients
+           recipe.key_info << recipe_instructions
+           binding.pry
+        end
         
-#         courses.each do |recipe|
-#             recipe_url = recipe.css("a").attr("href").value
+        end
+
+        
     
-#     end
-# end
+

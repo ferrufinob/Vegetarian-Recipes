@@ -1,19 +1,35 @@
 class VegetarianRecipes::Recipe
 
-    attr_accessor :name, :url, :category, :ingredients, :instructions
+    attr_accessor :name, :course, :url, :key_info
 
     @@all = []
 
-    def initialize
-        @@all << self
+    def initialize(name, course, url)
+        @name = name
+        @course = course
+        @url = url
+    
+       
+        # notify about the recipe
+        # add_to_course
+       add_to_course
+        save
     end
 
     def self.all
         @@all
     end
 
-    def self.reset
-        self.all.clear
+    def add_to_course
+        @course.recipes << self unless @course.recipes.include?(self)
     end
+
+    def save 
+        @@all << self
+    end
+
+   
+
+   
 
 end

@@ -25,7 +25,6 @@ end
 
 def get_courses
     # to be scraped instead
-    
     @courses = VegetarianRecipes::Course.all
 end
 
@@ -49,10 +48,25 @@ end
 
 def show_recipes_for(chosen_course)
     course = @courses[chosen_course - 1]
+    course.get_recipes
     puts "Here are recipes for #{course.name}"
-    # VegetarianRecipes::Recipe.all.each.with_index(1) do |recipe|
-    #  puts recipe.name
-    # end
-    # get_user_recipe
+    course.recipes.each.with_index(1) do |recipe, index|
+        puts "#{index}. #{recipe.name}"
+    end  
+    get_user_recipe(course)
 end
+
+def get_user_recipe(course)
+    puts "Choose a recipe to see more details."
+    input = gets.strip
+    recipe = course.recipes[input.to_i - 1]
+    VegetarianRecipes::Recipe.get_recipe_details 
+    show_recipe_details(recipe)
+end
+
+def show_recipe_details(recipe)
+    puts recipe.name
+    recipe.key_info.each {|i| puts "- #{i}"}
+end
+
 end
