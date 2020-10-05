@@ -41,12 +41,22 @@ end
 def get_user_course
     # check if valid course
     chosen_course = gets.strip.to_i
-    show_recipes_for(chosen_course) if valid_input(chosen_course.to_i, @courses)
+   if valid_input(chosen_course.to_i, @courses)
+    show_recipes_for(chosen_course)
+   elsif !valid_input(chosen_course.to_i, @courses)
+    system("clear")
+    puts ""
+    puts "Invalid Input"
+    puts ""
+    list_courses
+   
+end
 end
 
 def valid_input(input, data)
   input.to_i <= data.length && input.to_i > 0
 end
+
 
 def show_recipes_for(chosen_course)
     course = @courses[chosen_course - 1]
@@ -60,12 +70,13 @@ end
 
 # shows recipe details
 def get_user_recipe(course)
-    input = gets.strip
+    input = gets.strip.to_i
     recipe = course.recipes[input.to_i - 1]
     recipe.get_ingredients
     recipe.get_instructions
     show_ingredients(recipe)
     show_instructions(recipe)
+    
     
 end
 
