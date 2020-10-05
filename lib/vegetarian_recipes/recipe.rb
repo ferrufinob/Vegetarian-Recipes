@@ -1,6 +1,6 @@
 class VegetarianRecipes::Recipe
 
-    attr_accessor :name, :course, :url, :key_info
+    attr_accessor :name, :course, :url, :ingredients, :instructions
 
     @@all = []
 
@@ -8,8 +8,7 @@ class VegetarianRecipes::Recipe
         @name = name
         @course = course
         @url = url
-    
-       
+        
         # notify about the recipe
         # add_to_course
        add_to_course
@@ -23,6 +22,7 @@ class VegetarianRecipes::Recipe
     def add_to_course
         @course.recipes << self unless @course.recipes.include?(self)
     end
+
 
     def save 
         @@all << self

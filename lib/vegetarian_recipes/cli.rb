@@ -17,7 +17,9 @@ def start
     
     get_courses
     list_courses
+    
     get_user_course
+    
     
     # get_recipes_for(course)
     # list_recipe 
@@ -56,17 +58,14 @@ def show_recipes_for(chosen_course)
     get_user_recipe(course)
 end
 
+
 def get_user_recipe(course)
     puts "Choose a recipe to see more details."
     input = gets.strip
     recipe = course.recipes[input.to_i - 1]
-    VegetarianRecipes::Recipe.get_recipe_details 
-    show_recipe_details(recipe)
+    
 end
 
-def show_recipe_details(recipe)
-    puts recipe.name
-    recipe.key_info.each {|i| puts "- #{i}"}
-end
+
 
 end

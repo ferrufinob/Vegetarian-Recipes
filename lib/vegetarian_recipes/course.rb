@@ -18,6 +18,7 @@ class VegetarianRecipes::Course
     def get_recipes
         # return a recipes array
         VegetarianRecipes::Scraper.scrape_recipes(self) if @recipes.empty?
+
     end
 
     def save
