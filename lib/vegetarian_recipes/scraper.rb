@@ -1,16 +1,7 @@
 
 class VegetarianRecipes::Scraper
     def self.scrape_courses
-#         url = "https://www.skinnytaste.com/recipes/"
- 
-#    webpage = Nokogiri::HTML(open(url))
-#    section = webpage.css ("li.categories ul li")
-#    array_of_links = section.css("li.cat-item a")
-#    array_of_links.map do |link|
-#     VegetarianRecipes::Course.new(link.text, link.attributes["href"].value)
-#    end
-#     # return value will be an array of objects
-#    end
+
         doc = Nokogiri::HTML(open("https://www.skinnytaste.com/recipes/"))
         scraping_block = doc.css(".categories ul li")
         scraping_block.each do |course|
@@ -40,14 +31,8 @@ class VegetarianRecipes::Scraper
             
             ingredients = doc.css("ul.wprm-recipe-ingredients li.wprm-recipe-ingredient")
             ingredients.each do |o|
-              inf = o.text.strip
-              
-            # instructions = m.css("ul.wprm-recipe-instructions li").text.strip
+              inf = o.text.strip  
            recipe.info << inf
-          
-          # doc.css("ul.wprm-recipe-ingredients li.wprm-recipe-ingredient")
-          # doc.css(".wprm-recipe-instruction-group ul.wprm-recipe-instructions li")
-    
           end 
         end 
 
