@@ -22,26 +22,46 @@ class VegetarianRecipes::Scraper
 
 
         def self.scrape_recipes(course)
-           url = "#{course.ref}"
-           doc = Nokogiri::HTML(open(url))
+           link = "#{course.ref}"
+           doc = Nokogiri::HTML(open(link))
            recipes = doc.css(".archives .archive-post") 
              recipes.each do |recipe|
                name = recipe.css("a h4").text
                url = recipe.css("a").attr("href").value
              VegetarianRecipes::Recipe.new(name, course, url)
+
            end   
         end
 
+        
         def self.scrape_key_info(recipe)
-           self.scrape_recipes.each do  |doc|
-        #    doc = Nokogiri::HTML(open(url))
-           recipe_ingredients = doc.css(".wprm-recipe-ingredients-container").text.strip
-           recipe_instructions = doc.css(".wprm-recipe-instructions").text.strip
-           
+            
+            doc = Nokogiri::HTML(open("#{recipe.url}"))
+            
+            ingredients = doc.css("ul.wprm-recipe-ingredients li.wprm-recipe-ingredient")
+            ingredients.each do |o|
+              inf = o.text.strip
+              
+            # instructions = m.css("ul.wprm-recipe-instructions li").text.strip
+           recipe.info << inf
+          
+          # doc.css("ul.wprm-recipe-ingredients li.wprm-recipe-ingredient")
+          # doc.css(".wprm-recipe-instruction-group ul.wprm-recipe-instructions li")
+    
+          end 
+        end 
 
-           binding.pry
+        def self.scrape_instructions(recipe)
+          doc = Nokogiri::HTML(open("#{recipe.url}"))
+          inst = doc.css(".wprm-recipe-instruction-group ul.wprm-recipe-instructions li")
+          inst.each do |o|
+            instruct = o.text.strip
+            recipe.instructions << instruct
+          end
         end
-    end
+           
+          
+      
         
         end
 
