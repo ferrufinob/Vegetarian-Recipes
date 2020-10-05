@@ -25,14 +25,14 @@ class VegetarianRecipes::Scraper
         end
 
         
-        def self.scrape_key_info(recipe)
+        def self.scrape_ingredients(recipe)
             
             doc = Nokogiri::HTML(open("#{recipe.url}"))
             
             ingredients = doc.css("ul.wprm-recipe-ingredients li.wprm-recipe-ingredient")
             ingredients.each do |o|
               inf = o.text.strip  
-           recipe.info << inf
+           recipe.ingredients << inf
           end 
         end 
 

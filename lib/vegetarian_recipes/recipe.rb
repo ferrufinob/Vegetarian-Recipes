@@ -1,6 +1,6 @@
 class VegetarianRecipes::Recipe
 
-    attr_accessor :name, :course, :url, :info, :instructions
+    attr_accessor :name, :course, :url, :ingredients, :instructions
 
     @@all = []
 
@@ -8,7 +8,7 @@ class VegetarianRecipes::Recipe
         @name = name
         @course = course
         @url = url
-        @info = []
+        @ingredients = []
         @instructions = []
         
         # notify about the recipe
@@ -25,8 +25,8 @@ class VegetarianRecipes::Recipe
         @course.recipes << self unless @course.recipes.include?(self)
     end
 
-    def get_recipe_details
-        VegetarianRecipes::Scraper.scrape_key_info(self) if @info.empty?
+    def get_ingredients
+        VegetarianRecipes::Scraper.scrape_ingredients(self) if @ingredients.empty?
        
       end 
 

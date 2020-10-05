@@ -18,6 +18,8 @@ def start
     get_courses
     list_courses
     get_user_course
+   
+
     # go back to start or good bye 
 end 
 
@@ -29,8 +31,10 @@ end
 def list_courses
     # list courses
     puts "choose a course to see recipe"
+    puts ""
     @courses.each.with_index(1) do |course, index|
-        puts "#{index}. #{course.name}"   
+        puts "#{index}. #{course.name}"
+         
     end
 end
 
@@ -54,30 +58,31 @@ def show_recipes_for(chosen_course)
     get_user_recipe(course)
 end
 
-
+# shows recipe details
 def get_user_recipe(course)
-    puts "Choose a recipe to see more details."
     input = gets.strip
     recipe = course.recipes[input.to_i - 1]
-    recipe.get_recipe_details
+    recipe.get_ingredients
     recipe.get_instructions
+    show_ingredients(recipe)
+    show_instructions(recipe)
+    
+end
+
+
+def show_ingredients(recipe)
+    puts recipe.name
     puts ""
     puts "Ingredients"
     puts ""
-    show_recipe_details(recipe)
-    puts ""
-    puts "Instructions"
-    puts ""
-    show_instructions(recipe)
-end
-
-def show_recipe_details(recipe)
-    puts recipe.name
-    recipe.info.each {|i| puts "#{i}"}
+    recipe.ingredients.each {|i| puts "- #{i}"}
 end
 
 def show_instructions(recipe)
-    recipe.instructions.each {|i| puts "#{i}"}
+    puts ""
+    puts "Instructions"
+    puts ""
+    recipe.instructions.each {|i| puts "- #{i}"}
 end
 
 

@@ -7,7 +7,9 @@ require_relative "./vegetarian_recipes/recipe"
 require 'pry'
 require 'nokogiri'
 require 'open-uri'
+require 'colorize'
 require 'lolize'
+require 'tty-prompt'
 # module VegetarianRecipes
 #   class Error < StandardError; end
 #   # Your code goes here...
