@@ -10,9 +10,6 @@ class VegetarianRecipes::Recipe
         @url = url
         @ingredients = []
         @instructions = []
-        
-        # notify about the recipe
-        # add_to_course
        add_to_course
         save
     end

@@ -1,8 +1,6 @@
 require 'pry'
 class VegetarianRecipes::CLI
 
-
-
 def start
     @input =  nil
     until @input == "exit"
@@ -18,7 +16,6 @@ end
 
 def greetings
     colorizer = Lolize::Colorizer.new
-    
     colorizer.write "\n-------------------------------------------------------------------------\n"
     
     colorizer.write "                            Welcome!!                                        \n "
@@ -29,28 +26,17 @@ def greetings
     
     colorizer.write "\-------------------------------------------------------------------------\n"
     puts ""
-    
-    # get_courses
-    # list_courses
-    # get_user_course
-  
-     # add while loop
-#    go back to start or good bye 
 end 
 
 def get_courses
-    # to be scraped instead
     @courses = VegetarianRecipes::Course.all
 end
 
-
 def list_courses
-    # list courses
-    puts "choose a course to see recipe"
+    puts "choose a course to see recipe".colorize(:magenta)
     puts ""
     @courses.each.with_index(1) do |course, index|
-        puts "#{index}. #{course.name}"
-         
+        puts "#{index}. #{course.name}"    
     end
 end
 
@@ -59,12 +45,10 @@ def get_user_course
     chosen_course = gets.strip.to_i
    if valid_input(chosen_course.to_i, @courses)
     show_recipes_for(chosen_course)
-   elsif !valid_input(chosen_course.to_i, @courses)
-    system("clear")
+   else 
     puts ""
-    puts "Invalid Input".colorize(:red)
+    puts "oops wrong number try again".colorize(:red)
     puts ""  
-    list_courses
     get_user_course
 end
 end
@@ -73,15 +57,16 @@ def valid_input(input, data)
   input.to_i <= data.length && input.to_i > 0
 end
 
-
 def show_recipes_for(chosen_course)
     course = @courses[chosen_course - 1]
     course.get_recipes
     
     puts ""
     puts ""
-    puts "Here are recipes for #{course.name}"
-    
+    colorizer = Lolize::Colorizer.new
+    colorizer.write "\n-------------------------------------------------------------------------\n"
+    puts ""
+    puts "Here are recipes for #{course.name}".colorize(:magenta)
     puts ""
     course.recipes.each.with_index(1) do |recipe, index|
         puts "#{index}. #{recipe.name}"
@@ -93,22 +78,21 @@ end
 def get_user_recipe(course)
     chosen_recipe = gets.strip.to_i
     recipe = course.recipes[chosen_recipe.to_i - 1]
-    if chosen_recipe.to_i <= course.recipes.length && chosen_recipe.to_i > 0 
+    if valid_input(chosen_recipe.to_i, course.recipes)
     recipe.get_ingredients
     recipe.get_instructions
     show_ingredients(recipe)
     show_instructions(recipe)
     else
         puts ""
-        puts "Invalid try again"
+        puts "oops wrong number, try again".colorize(:red)
         get_user_recipe(course)        
     end
 end
 
-
 def show_ingredients(recipe)
     puts ""
-    puts  recipe.name.colorize(:blue)
+    puts  recipe.name.colorize(:magenta)
     puts ""
     puts "Ingredients"
     puts ""
@@ -125,12 +109,12 @@ end
 
 def next_step
     puts ""
-    puts "Type exit or type any key to return to all courses."
+    puts "Type exit or type any key to return to all courses.".colorize(:magenta)
     @input = gets.strip
 end
 
 def farewell
-    puts "Thank you for stopping by"
+    puts "Thank you for stopping by!!!".colorize(:magenta)
 end
 
 

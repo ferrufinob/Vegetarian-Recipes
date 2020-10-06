@@ -36,6 +36,7 @@ class VegetarianRecipes::Scraper
           end 
         end 
 
+      
         def self.scrape_instructions(recipe)
           doc = Nokogiri::HTML(open("#{recipe.url}"))
           inst = doc.css(".wprm-recipe-instruction-group ul.wprm-recipe-instructions li")
@@ -45,9 +46,6 @@ class VegetarianRecipes::Scraper
           end
         end
            
-          
-      
-        
         end
 
         

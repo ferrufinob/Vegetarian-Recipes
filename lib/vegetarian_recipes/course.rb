@@ -24,10 +24,4 @@ class VegetarianRecipes::Course
         @@all << self
     end 
 
-    
-
-
-
-
-
 end
